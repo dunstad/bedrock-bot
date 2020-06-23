@@ -1,0 +1,23 @@
+{
+  "name": "bedrock-bot",
+  "version": "1.0.0",
+  "description": "A Discord bot to manage a Minecraft Bedrock server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dunstad/bedrock-bot.git"
+  },
+  "author": "dunstad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dunstad/bedrock-bot/issues"
+  },
+  "homepage": "https://github.com/dunstad/bedrock-bot#readme",
+  "dependencies": {
+    "archiver": "^4.0.1",
+    "discord.js": "^12.2.0"
+  }
+}
