@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 
 const https = require('https');
 const config = require('./config.json');
+const { spawn, spawnSync } = require( 'child_process' );
 
 // create a new Discord client
 const client = new Discord.Client();
@@ -20,10 +21,13 @@ client.on('message', message => {
     message.channel.send('Pong.');
   }
   if (message.content === `${config.prefix}start`) {
-
+    spawnSync('tmux', ['new-session', '-d', '-s', 'bedrock']);
+    spawn('tmux', ['send', '-t', 'bedrock', config.serverPath, 'ENTER']);
+    message.channel.send('Starting server.');
   }  
   if (message.content === `${config.prefix}stop`) {
-
+    spawn('tmux', ['send', '-t', 'bedrock', 'stop', 'ENTER']);
+    message.channel.send('Stopping server.');
   }
 });
 
