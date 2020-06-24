@@ -51,13 +51,23 @@ function getStatus(ip, port) {
       console.log('HEADERS: ' + JSON.stringify(res.headers));
 
       // Buffer the body entirely for processing as a whole.
-      let bodyChunks = [];
+      let json = '';
       res.on('data', function(chunk) {
         // You can process streamed parts here...
-        bodyChunks.push(chunk);
+        json += chunk;
       }).on('end', function() {
-        let body = Buffer.concat(bodyChunks);
-        resolve(body);
+        if (res.statusCode === 200) {
+          try {
+              var data = JSON.parse(json);
+              // data is available here:
+              resolve(data);
+          } catch (e) {
+              reject('Error parsing JSON!');
+          }
+        }
+        else {
+          reject(`Status: ${res.statusCode}`);
+        }
       })
     });
 
@@ -82,15 +92,17 @@ client.on('ready', () => {
     // Fetch a channel by its id
     client.channels.fetch(config.channelId)
       .then(bedrockChannel => {
-        console.log(bedrockChannel.name)
         getStatus(config.ip).then((body)=>{
           let numPlayers = body.Players !== undefined ? body.Players : client.bedrockStatus.players;
+          console.log('status', JSON.stringify(client.bedrockStatus));
+          console.log('body', JSON.stringify(body));
           if (!client.bedrockStatus.online || (client.bedrockStatus.players !== body.Players)) {
             bedrockChannel.send(`${config.ip}: Online!\nPlayers: ${numPlayers}`);
           }
           client.bedrockStatus.online = true;
           client.bedrockStatus.players = numPlayers;
         }).catch((message)=>{
+          console.error(message);
           if (client.bedrockStatus.online) {
             bedrockChannel.send(`${config.ip}: Offline.`);
           }
