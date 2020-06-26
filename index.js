@@ -97,7 +97,7 @@ client.on('ready', () => {
           console.log('status', JSON.stringify(client.bedrockStatus));
           console.log('body', JSON.stringify(body));
           if (!client.bedrockStatus.online || (client.bedrockStatus.players !== body.Players)) {
-            bedrockChannel.send(`${config.ip}: Online!\nPlayers: ${numPlayers}`);
+            bedrockChannel.send(`${config.ip}: Online!\nPlayers: ${numPlayers}\nGame mode: ${body.GameMode}`);
           }
           client.bedrockStatus.online = true;
           client.bedrockStatus.players = numPlayers;
