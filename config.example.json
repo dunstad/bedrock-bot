@@ -3,5 +3,7 @@
   "token": "your token here",
   "ip": "123.45.678.99",
   "channelId": "123456789",
-  "serverPath": "/path/to/bedrock_server.exe"
+  "serverPath": "/path/to/bedrock_server.exe",
+  "worldPath": "/path/to/bedrock-server/worlds/worldName",
+  "backupPath": "/path/to/backup/folder"
 }
